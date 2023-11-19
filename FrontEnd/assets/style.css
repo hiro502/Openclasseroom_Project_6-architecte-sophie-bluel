@@ -1,11 +1,11 @@
-/* http://meyerweb.com/eric/tools/css/reset/
+/* http://meyerweb.com/eric/tools/.mode-modifier/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
+a, abbr, acronym, addr.mode-modifier, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
@@ -28,6 +28,11 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+header a{
+	text-decoration: none;
+	color: black;
+}
+
 body {
 	line-height: 1;
 }
@@ -46,17 +51,21 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/** end reset css**/
+/** end reset .mode-modifier**/
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color:#FFFEF8;
 }
+
+
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 0;
+	
 }
 section {
 	margin: 50px 0
@@ -123,7 +132,6 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
 .gallery {
 	width: 100%;
@@ -148,14 +156,14 @@ margin: auto;
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, .login-form form{
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, .login-form input{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
@@ -180,9 +188,161 @@ input[type="submit"]{
 	border-radius: 60px ;
 }
 
+footer{
+	background-color: white;
+	height: 60px;
+	margin: 0 calc(50% - 50vw);
+	position: relative;
+}
+
+footer nav{
+	background-color: #ffffff;
+	position: absolute;
+	right: 100px;
+	bottom: 20px;
+}
+
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
 }
 
+
+
+
+.filtres{
+	display: flex;
+	justify-content: stretch;
+	gap: 10px;
+	margin: 51px auto;
+	width: 60%;
+}
+
+.filtres button{
+	color: #1D6154;
+	background-color: white;
+	height: 37px;
+	text-align: center;
+	font-family: Syne;
+	font-size: 16px;
+	font-weight: 700;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+}
+
+.btn-filtrer{
+	display: none;
+}
+
+.btn-filtrer:checked + label{
+	background-color: #1D6154;
+	color: white
+}
+
+.filtres label{
+	color: #1D6154;
+	background-color: white;
+	text-align: center;
+	font-family: Syne;
+	font-size: 16px;
+	font-weight: 700;
+	height: 37px;
+	line-height: 37px;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+}
+
+.btn-tous, .btn-objets {
+	width: 18%; 
+}
+.btn-appartement{
+	width: 26%;
+}
+.btn-hotel{
+	width: 32%;
+}
+
+/* Page Login */
+
+#page-login{
+
+	height: 1024px;
+}
+
+.header-login{
+	font-weight: 600;
+}
+
+.login-form{
+margin: 242px auto 415px;
+width: 50%;
+}
+
+.login-form form{
+	gap: 15px;
+}
+
+.login-form > * {
+	text-align: center;
+}
+
+.login-form p a {
+	color: inherit;
+}
+
+/* index login */
+
+.header-edition{
+	height: 59px;
+	background-color: black;
+	margin: 0 calc(50% - 50vw);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header-edition a{
+	color: white;
+	text-align: center;
+	text-decoration: none;
+}
+
+.header-edition a::before {
+	content: "\f044"; 
+	font-family: FontAwesome;
+	margin-right: 0.5em;
+  }
+
+.mode-modifier{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 80px;
+}
+.mode-modifier h2{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.mode-modifier p {
+	margin-left: 370px;
+	line-height: normal;
+  }
+.mode-modifier a::before{
+	content: "\f044"; 
+	font-family: FontAwesome;
+	margin-right: 0.5em;
+}  
+
+.mode-modifier a{
+	text-decoration: none;
+	color: black;
+}
+
+.title-container{
+	height: 267px;
+	display: flex;
+	flex-direction: column;
+}

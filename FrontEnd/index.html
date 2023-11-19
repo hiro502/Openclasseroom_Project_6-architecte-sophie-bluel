@@ -9,15 +9,20 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/9d6121e7b0.js" crossorigin="anonymous"></script>
+	<script type="module" src="../FrontEnd/assets/main.js"></script>
 </head>
 <body>
+<!-- <div class="header-edition">
+	<p>Mode édition</p>
+</div> -->
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li><a href="./login.html"  id="btnLogin">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -35,9 +40,24 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="title-container">
+			<div class="mode-modifier">
+				<h2>Mes Projets</h2>
+				<!-- <p><a href="">modifier</a></p> -->
+			</div>
+			<div class="filtres">
+				<input type="radio" name="category" id="tous" checked class="btn-filtrer">
+				<label for="tous" class="btn-tous">Tous</label>
+				<input type="radio" name="category" id="objets" class="btn-filtrer">
+				<label for="objets" class="btn-objets">Objets</label>
+				<input type="radio" name="category" id="appartement" class="btn-filtrer">
+				<label for="appartement" class="btn-appartement">Appartements</label>
+				<input type="radio" name="category" id="hotel-resto" class="btn-filtrer">
+				<label for="hotel-resto" class="btn-hotel">Hôtels & restaurants</label> 
+			</div>
+		</div>
 		<div class="gallery">
-			<figure>
+			<!-- <figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
 				<figcaption>Abajour Tahina</figcaption>
 			</figure>
@@ -80,7 +100,7 @@
 			<figure>
 				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
 				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
+			</figure> -->
 		</div>
 	</section>
 	<section id="contact">
@@ -107,3 +127,4 @@
 </footer>
 </body>
 </html>
+
