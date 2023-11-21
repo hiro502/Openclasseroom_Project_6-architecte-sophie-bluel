@@ -1,6 +1,8 @@
 import {addElementToIndex} from "./common.js"
 
 
+'use strict';
+
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
   
@@ -21,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Authentication failed');
+        throw new Error('Échec de l\'authentification');
       }
       return response.json();
     })
@@ -29,13 +31,13 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
       const token = data.token;
       localStorage.setItem('accessToken', token);
 
-      console.log('Authentication successful:', data);
+      console.log('Authentification réussie :', data);
 
 
       window.location.href = './index.html';
     })
     .catch(error => {
-      console.error('Authentication failed:', error);
+      console.error('Échec de l\'authentification :', error);
       alert('L\'authentification a échoué. Veuillez vérifier votre adresse e-mail et votre mot de passe.');
     });
   });

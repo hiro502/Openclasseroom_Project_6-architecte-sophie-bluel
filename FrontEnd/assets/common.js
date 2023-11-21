@@ -7,23 +7,25 @@ export function addElementToIndex() {
     }
   
     const btnLogin = document.getElementById('btnLogin');
-    btnLogin.textContent ='Logout';
+    btnLogin.textContent ='logout';
     btnLogin.id = 'btnLogout';
     btnLogin.href ='./index.html';
 
     const newDiv = document.createElement('div');
     newDiv.className = 'header-edition';
-    newDiv.innerHTML = '<p><a href="">Mode édition</a></p>';
+    newDiv.innerHTML = '<p>Mode édition</p>';
   
     const body = document.querySelector('body');
     body.prepend(newDiv);
 
 
-    const newP = document.createElement('p');
-    newP.innerHTML = '<a href="">modifier</a>';
+    const newBtn = document.createElement('button');
+    newBtn.innerText = 'modifier';
+    newBtn.className = 'btn-modifier';
+    newBtn.id ='openModalBtn'; 
     
-    const modeModifier = document.querySelector('.mode-modifier');
-    modeModifier.appendChild(newP);
+    const modeModifier = document.querySelector('.mode-edition');
+    modeModifier.appendChild(newBtn);
 
 }
 
