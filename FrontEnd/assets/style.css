@@ -1,11 +1,11 @@
-/* http://meyerweb.com/eric/tools/.mode-modifier/reset/
+/* http://meyerweb.com/eric/tools/.mode-edition/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, addr.mode-modifier, big, cite, code,
+a, abbr, acronym, addr.mode-edition, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
 b, u, i, center,
@@ -51,13 +51,13 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/** end reset .mode-modifier**/
+/** end reset **/
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
-	background-color:#FFFEF8;
+	background-color:#FFFEF8;;
 }
 
 
@@ -107,6 +107,13 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+#btnLogin:hover, #btnLogout:hover {
+	font-weight: 600;
+}
+
+
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -156,20 +163,20 @@ margin: auto;
 #contact h2{
 	margin-bottom: 20px;
 }
-#contact form, .login-form form{
+#contact form, .login-form form , .form-container{
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input, .login-form input{
+#contact input, .login-form input,  .form-info-photo input, select{
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, #loginForm label, .form-info-photo label{
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -186,6 +193,7 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
 
 footer{
@@ -207,12 +215,47 @@ footer nav ul {
 	justify-content: flex-end;
 }
 
+.title-container{
+	height: 267px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	position: relative;
+}
 
 
+.mode-edition{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	top: -30px;
+}
+.mode-edition h2{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+
+.btn-modifier::before{
+	content: "\f044"; 
+	font-family: FontAwesome;
+	margin-right: 0.5em;
+}  
+
+.btn-modifier {
+	margin-left: 370px;
+	line-height: normal;
+	font-family: Work Sans;
+	cursor: pointer;
+	border: none;
+	background-color: #FFFEF8;
+	font-size: 14px;
+  }
 
 .filtres{
 	display: flex;
-	justify-content: stretch;
 	gap: 10px;
 	margin: 51px auto;
 	width: 60%;
@@ -238,6 +281,8 @@ footer nav ul {
 	background-color: #1D6154;
 	color: white
 }
+
+
 
 .filtres label{
 	color: #1D6154;
@@ -278,9 +323,6 @@ margin: 242px auto 415px;
 width: 50%;
 }
 
-.login-form form{
-	gap: 15px;
-}
 
 .login-form > * {
 	text-align: center;
@@ -301,48 +343,226 @@ width: 50%;
 	align-items: center;
 }
 
-.header-edition a{
+.header-edition p{
 	color: white;
 	text-align: center;
 	text-decoration: none;
 }
 
-.header-edition a::before {
+.header-edition p::before {
 	content: "\f044"; 
 	font-family: FontAwesome;
 	margin-right: 0.5em;
   }
 
-.mode-modifier{
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 80px;
+
+/* modal */
+#closeModalBtn, #btn-back{
+	cursor: pointer;
 }
-.mode-modifier h2{
+
+#modal-bg{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color:rgba(0, 0, 0, 0.30);
+}
+
+
+#modal-container{
 	position: absolute;
+	width: 630px;
+	height: 688px;
+	top: 600px;
 	left: 50%;
 	transform: translateX(-50%);
-}
+	border-radius: 10px;
+	background-color: #FFF;
+	z-index: 1;
+	}
 
-.mode-modifier p {
-	margin-left: 370px;
+/* #modal-content.active, #modal-bg.active{
+	opacity: 1;
+} */
+
+
+#modal-content h3{
+	color: #000;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
 	line-height: normal;
-  }
-.mode-modifier a::before{
-	content: "\f044"; 
-	font-family: FontAwesome;
-	margin-right: 0.5em;
-}  
-
-.mode-modifier a{
-	text-decoration: none;
-	color: black;
+	margin-bottom: 40px;
+	
 }
 
-.title-container{
-	height: 267px;
+#modal-content{
+	width: 420px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	margin: 20px auto 45px;
 }
+
+hr{
+	width: 100%;
+	height: 1px;
+	background-color: #B3B3B3;
+	border: 0;
+}
+.modal-top{
+	position: relative;
+	width: 570px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 26px;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+}
+
+
+.gallery-modal{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-column-gap: 6.2px;
+	grid-row-gap: 20px;
+	overflow: auto;
+	height: 430px;
+
+}
+
+.gallery-modal img{
+	width: 100%;
+}
+#modal{
+	display: none;
+}
+
+.projet-modal{
+	position: relative;
+	height: 100%;
+}
+.projet-modal div{
+	height: 17px;
+	width: 17px;
+	background-color: black;
+	border-radius: 2px;
+	text-align: center;
+	line-height: 19px;
+	position: absolute;
+	top: 7px;
+	right: 5px;
+}
+
+.remove-projet{
+	cursor: pointer;
+}
+
+
+#btnAjout, #submitBtn{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 240px;
+	height: 36px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
+	cursor: pointer;
+}
+
+#submitBtn:disabled{
+	background-color: #A7A7A7;;
+}
+
+
+/* modale -ajout photo- */
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+	height: 400px;
+}
+
+.form-photo {
+    text-align: center;
+    height: 170px;
+    border-radius: 3px;
+    background-color: #E8F1F6;
+}
+
+.form-photo svg{
+    margin-top: 13px;
+}
+
+.form-photo p{
+    color: #444;
+    text-align: center;
+    font-family: Work Sans;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.btn-upload{
+    
+    background-color:#CBD6DC;
+    margin :auto ;
+    width: 180px;
+    height:36px;
+	border-radius: 60px ;
+	text-align: center;
+    font-family: Work Sans;
+	font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+	color: #306685;
+    line-height: 36px;
+}
+
+
+
+.form-info-photo label{
+    color: #3D3D3D;
+    font-family: Work Sans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+	display: block;
+}
+
+#photoUploader label {
+	display: block;
+    margin-bottom: 5px;
+	cursor:pointer;
+}
+
+
+input[type="file"]{
+  display:none;
+  cursor: pointer;
+}
+
+.form-container input, #category {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+#imgPreview {
+    max-width: 100%;
+    max-height: 170px;
+}
+
