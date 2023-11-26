@@ -1,6 +1,3 @@
-import {addElementToIndex} from "./common.js"
-
-
 'use strict';
 
 document.getElementById('loginForm').addEventListener('submit', function(event) {

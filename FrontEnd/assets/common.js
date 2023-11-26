@@ -2,7 +2,7 @@ export function addElementToIndex() {
     
   const token = localStorage.getItem('accessToken');
     if (!token) {
-      console.log('Token not found. Skipping addElementToIndex.');
+      console.log('Token non trouvé. Ignorer addElementToIndex.');
       return;
     }
   
