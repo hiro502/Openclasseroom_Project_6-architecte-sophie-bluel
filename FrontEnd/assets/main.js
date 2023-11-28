@@ -1,7 +1,5 @@
 'use strict';
 
-// import {addElementToIndex} from "./common.js"
-
 const apiEndpoint = 'http://localhost:5678/api/';
 const token = localStorage.getItem('accessToken');
 
@@ -165,7 +163,6 @@ function initialisationForm () {
   imageUpload.value = '';
 }
 
-// document.querySelector('#imagePreview img').addEventListener('click')
 
 function btnCloseAndBack(){
   containerGalleyModal.style.display = 'grid';
@@ -271,9 +268,7 @@ function handleClick(elementId) {
     const confirmation = confirm(`Voulez-vous supprimer ce projet ?`);
 
     if (confirmation) {
-      // L'utilisateur a cliqué sur OK. Poursuite de l'action...
-      console.log("L'utilisateur a cliqué sur OK. Poursuite de l'action...");
-
+    
       // Envoi de la requête DELETE
       fetch(`${apiEndpoint}works/${elementId}`, {
         method: 'DELETE',
@@ -340,14 +335,10 @@ function submitForm() {
   let title = document.getElementById('title').value;
   let category = document.getElementById('category').value;
   let imageUpload = document.getElementById('imageUpload');
-  console.log(imageUpload);
-
-  
-
+ 
   // Activer le bouton de soumission uniquement si le formulaire est entièrement rempli
   if (title && category && imageUpload.files.length > 0) {
-      alert('Votre photo a été ajoutée avec succès!');
-
+      
       // Créer un objet FormData
       const formData = new FormData();
       formData.append('image', imageUpload.files[0]);
@@ -367,36 +358,35 @@ function submitForm() {
               if (!response.ok) {
                   throw new Error('La réponse du réseau n\'était pas valide');
               }
-
               fetchDataAndRender();
+              console.log('Requête POST réussie');
+              alert('Votre photo a été ajoutée avec succès!');
+              
           })
           .catch(error => {
               console.error('Problème avec la requête POST:', error);
           });
   } else {
-      // Gérer lorsque le formulaire n'est pas entièrement rempli
-      alert('Veuillez remplir tous les champs.');
+ // lorsque le formulaire n'est pas entièrement rempli
+   alert('Veuillez remplir tous les champs.');
   }
 }
 
 
 submitBtn.addEventListener('click',  submitForm);
 
-// Surveiller si tous les éléments sont saisis et activer/désactiver le bouton de soumission à chaque saisie
 
+// Surveiller si tous les éléments sont saisis et activer/désactiver le bouton d'envoie
 
-document.addEventListener('DOMContentLoaded', function () {
-  
-  let elements = document.querySelectorAll('input, select');
-  elements.forEach(function (element) {
-      element.addEventListener('input', function () {
-          let title = document.getElementById('title').value;
-          let category = document.getElementById('category').value;
-          let imageUpload = document.getElementById('imageUpload');
+let elements = document.querySelectorAll('.form-info-photo input, .form-info-photo select');
+elements.forEach(function (element) {
+    element.addEventListener('input', function () {
+        let title = document.getElementById('title').value;
+        let category = document.getElementById('category').value;
+        let imageUpload = document.getElementById('imageUpload');
 
-          // let submitBtn = document.getElementById('submitBtn');
-          submitBtn.disabled = !(title && category && imageUpload.files.length > 0);
-      });
-  });
+        if(title && category && imageUpload.files.length > 0){
+            document.getElementById('submitBtn').style.backgroundColor ='#1D6154';
+        }else{document.getElementById('submitBtn').style.backgroundColor ='#A7A7A7';}
+    });
 });
-
