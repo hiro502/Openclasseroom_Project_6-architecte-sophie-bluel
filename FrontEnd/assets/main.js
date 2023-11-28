@@ -1,9 +1,13 @@
 'use strict';
 
-import {addElementToIndex} from "./common.js"
+// import {addElementToIndex} from "./common.js"
 
 const apiEndpoint = 'http://localhost:5678/api/';
+const token = localStorage.getItem('accessToken');
+
+
 // Récupérer les données des projets depuis le stockage local s'ils existent, sinon les récupérer depuis l'API
+
 let projetsData = window.localStorage.getItem('projetsData');
 
 if(projetsData === null){
@@ -20,7 +24,7 @@ if(projetsData === null){
 }
 
 
-// Fonction pour générer et ajouter un projet au conteneur
+// -------Affichage des projets---------
 const containerGalley = document.querySelector('.gallery');
 
 function createProjectElement(projetElement) {
@@ -51,7 +55,7 @@ function genererProjet(projetsData) {
 
 genererProjet(projetsData);
 
- 
+//------Filtre des projets---------
 
 function filtrerProjets(categoryId) {
   const projetFiltre = projetsData.filter(projet => projet.categoryId == categoryId);
@@ -81,11 +85,43 @@ setupButtonClickEvent(btnAppartement, 2);
 setupButtonClickEvent(btnHotel, 3);
 
 
+//--------Page d'accueil connexion------------
 
+
+function addElementToIndex() {
+    
+    //Changement de bouton "Login" - "Logout"
+    const btnLogin = document.getElementById('btnLogin');
+    btnLogin.textContent ='logout';
+    btnLogin.id = 'btnLogout';
+    btnLogin.href ='./index.html';
+
+    //Header pour mode  edition
+    const newDiv = document.createElement('div');
+    newDiv.className = 'header-edition';
+    newDiv.innerHTML = '<p>Mode édition</p>';
+  
+    const body = document.querySelector('body');
+    body.prepend(newDiv);
+
+    //Bouton "modifier" pour la modale
+    const newBtn = document.createElement('button');
+    newBtn.innerText = 'modifier';
+    newBtn.className = 'btn-modifier';
+    newBtn.id ='openModalBtn'; 
+    
+    const modeModifier = document.querySelector('.mode-edition');
+    modeModifier.appendChild(newBtn);
+
+}
+
+
+//Ajouter des elements de la page connexion
 function addElementEdition(){
-    const token = localStorage.getItem('accessToken');
     if (token) {
         addElementToIndex();
+
+        //Bouton logout
         const btnLogout = document.getElementById('btnLogout');
         btnLogout.addEventListener('click', function(event) {
             localStorage.removeItem('accessToken');
@@ -93,6 +129,8 @@ function addElementEdition(){
             event.target.textContent = 'login';
             event.target.className = 'btnLogin';
         });
+
+        //Cacher le bar de filtre
         const filtre = document.querySelector('.filtres');
         filtre.innerHTML = '';
     }
@@ -101,37 +139,8 @@ function addElementEdition(){
 addElementEdition();  
 
 
-const containerGalleyModal = document.querySelector('.gallery-modal');
-
-function genererGalleyModal(projetsData) {
-  for (let i = 0; i < projetsData.length; i++) {
-  
-  const projetElement = projetsData[i];
-
-  const figure = document.createElement('figure');
-  const img = document.createElement('img');
-  const div = document.createElement('div');
-  figure.className ='projet-modal';
-  div.className ='remove-projet';
-  img.src = projetElement.imageUrl;
-  img.alt = projetElement.title;
-  div.innerHTML = '<i class="fa-solid fa-trash-can fa-xs" style="color: #ffffff;"></i>';
-  div.id = projetElement.id;
-  div.addEventListener('click', () => handleClick(projetElement.id));
- 
-
-  figure.appendChild(img);
-  figure.appendChild(div);
-  containerGalleyModal.appendChild(figure);
-}}
-
-genererGalleyModal(projetsData);
-
-
-
-
 // ------comportement des bouton de la fenetre modale--------------
-
+const containerGalleyModal = document.querySelector('.gallery-modal');
 const openModal = document.getElementById('openModalBtn'); //btn "modifier"
 const closeModal = document.getElementById('closeModalBtn') //btn croix
 const modal = document.getElementById('modal'); // la fenetre modale
@@ -209,6 +218,34 @@ btnAjout.addEventListener('click', () =>{
 })
 
 
+//--------------Galarie photos dans la modale-------------------
+function genererGalleyModal(projetsData) {
+  for (let i = 0; i < projetsData.length; i++) {
+  
+  const projetElement = projetsData[i];
+
+  const figure = document.createElement('figure');
+  const img = document.createElement('img');
+  const div = document.createElement('div');
+  figure.className ='projet-modal';
+  div.className ='remove-projet';
+  img.src = projetElement.imageUrl;
+  img.alt = projetElement.title;
+  div.innerHTML = '<i class="fa-solid fa-trash-can fa-xs" style="color: #ffffff;"></i>';
+  div.id = projetElement.id;
+  div.addEventListener('click', () => handleClick(projetElement.id));
+ 
+
+  figure.appendChild(img);
+  figure.appendChild(div);
+  containerGalleyModal.appendChild(figure);
+}}
+
+genererGalleyModal(projetsData);
+
+
+
+
 //------------------Suppression des photos---------------------------
 
 //recuperer des donnes apres la suppression
@@ -229,7 +266,6 @@ function fetchDataAndRender() {
 
 //supprimer des photos 
 function handleClick(elementId) {
-  const token = localStorage.getItem('accessToken');
   console.log(elementId);
   if (elementId) {
     const confirmation = confirm(`Voulez-vous supprimer ce projet ?`);
@@ -306,7 +342,7 @@ function submitForm() {
   let imageUpload = document.getElementById('imageUpload');
   console.log(imageUpload);
 
-  const token = localStorage.getItem('accessToken');
+  
 
   // Activer le bouton de soumission uniquement si le formulaire est entièrement rempli
   if (title && category && imageUpload.files.length > 0) {
@@ -346,9 +382,11 @@ function submitForm() {
 
 submitBtn.addEventListener('click',  submitForm);
 
+// Surveiller si tous les éléments sont saisis et activer/désactiver le bouton de soumission à chaque saisie
+
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Surveiller si tous les éléments sont saisis et activer/désactiver le bouton de soumission à chaque saisie
+  
   let elements = document.querySelectorAll('input, select');
   elements.forEach(function (element) {
       element.addEventListener('input', function () {
