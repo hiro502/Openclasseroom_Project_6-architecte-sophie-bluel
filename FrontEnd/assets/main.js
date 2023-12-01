@@ -6,35 +6,32 @@ const token = localStorage.getItem('accessToken');
 
 // Récupérer les données des projets depuis le stockage local s'ils existent, sinon les récupérer depuis l'API
 
-let projetsData = window.localStorage.getItem('projetsData');
-let categoryData = window.localStorage.getItem('categoryData');
+async function fetchDataFromAPI(endpoint, storageKey) {
+  let storedData = window.localStorage.getItem(storageKey);
 
+  if (storedData === null) {
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      storedData = data;
 
-if(projetsData === null){
-    fetch(`${apiEndpoint}works`)
-    .then(response => response.json())
-    .then(data => {
-      projetsData = data;
-      const valeurProjetsData = JSON.stringify(projetsData);
-      window.localStorage.setItem("projetsData", valeurProjetsData);
-  })
-  .catch(error => console.error('Erreur lors de la récupération des pièces depuis l\'API:', error));
-} else {
-    projetsData = JSON.parse(projetsData);
+      const serializedData = JSON.stringify(data);
+      window.localStorage.setItem(storageKey, serializedData);
+    } catch (error) {
+      console.error(`Erreur lors de la récupération des données depuis l'API (${storageKey}):`, error);
+    }
+  } else {
+    storedData = JSON.parse(storedData);
+  }
+
+  return storedData;
 }
 
-if(categoryData === null){
-  fetch(`${apiEndpoint}categories`)
-  .then(response => response.json())
-  .then(data => {
-    categoryData = data;
-    const valeurCategoryData = JSON.stringify(categoryData);
-    window.localStorage.setItem("categoryData", valeurCategoryData);
-})
-.catch(error => console.error('Erreur lors de la récupération des pièces depuis l\'API:', error));
-} else {
-  categoryData = JSON.parse(categoryData);
-}
+const apiEndpointWorks = `${apiEndpoint}works`;
+const apiEndpointCategories = `${apiEndpoint}categories`;
+
+let projetsData = await fetchDataFromAPI(apiEndpointWorks, 'projetsData');
+let categoryData = await fetchDataFromAPI(apiEndpointCategories, 'categoryData');
 
 // -------Affichage des projets---------
 const containerGalley = document.querySelector('.gallery');
@@ -299,11 +296,14 @@ genererGalleyModal(projetsData);
 
 //recuperer des donnes apres la suppression
 function fetchDataAndRender() {
-  fetch(`${apiEndpoint}works`)
-    .then(response => response.json())
+
+  window.localStorage.removeItem("projetsData");
+  fetch(apiEndpointWorks)
+    .then(response => response.json()
+    )
     .then(data => {
       projetsData = data;
-      const valeurProjetsData = JSON.stringify(projetsData);
+      let valeurProjetsData = JSON.stringify(projetsData);
       window.localStorage.setItem("projetsData", valeurProjetsData);
       containerGalley.innerHTML = '';
       containerGalleyModal.innerHTML ='';
