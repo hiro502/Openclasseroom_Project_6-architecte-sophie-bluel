@@ -7,6 +7,8 @@ const token = localStorage.getItem('accessToken');
 // Récupérer les données des projets depuis le stockage local s'ils existent, sinon les récupérer depuis l'API
 
 let projetsData = window.localStorage.getItem('projetsData');
+let categoryData = window.localStorage.getItem('categoryData');
+
 
 if(projetsData === null){
     fetch(`${apiEndpoint}works`)
@@ -21,6 +23,18 @@ if(projetsData === null){
     projetsData = JSON.parse(projetsData);
 }
 
+if(categoryData === null){
+  fetch(`${apiEndpoint}categories`)
+  .then(response => response.json())
+  .then(data => {
+    categoryData = data;
+    const valeurCategoryData = JSON.stringify(categoryData);
+    window.localStorage.setItem("categoryData", valeurCategoryData);
+})
+.catch(error => console.error('Erreur lors de la récupération des pièces depuis l\'API:', error));
+} else {
+  categoryData = JSON.parse(categoryData);
+}
 
 // -------Affichage des projets---------
 const containerGalley = document.querySelector('.gallery');
@@ -53,7 +67,44 @@ function genererProjet(projetsData) {
 
 genererProjet(projetsData);
 
-//------Filtre des projets---------
+//------Barre de filtre---------
+
+
+function genererFiltre() {
+  const barFiltre = document.querySelector('.filtres');
+
+  const firstInput = createInputElement('tous', 'Tous', true);
+  barFiltre.appendChild(firstInput.input);
+  barFiltre.appendChild(firstInput.label);
+
+  if (categoryData && categoryData.length > 0) {
+    for (let i = 0; i < categoryData.length; i++) {
+      const { input, label } = createInputElement(`category${categoryData[i].id}`, categoryData[i].name);
+      barFiltre.appendChild(input);
+      barFiltre.appendChild(label);
+    }
+  }
+}
+
+function createInputElement(id, labelText, isChecked = false) {
+  const input = document.createElement('input');
+  const label = document.createElement('label');
+
+  input.type = 'radio';
+  input.name = 'category';
+  input.className = 'btn-filtrer';
+  input.id = id;
+  input.checked = isChecked;
+
+  label.htmlFor = id;
+  label.textContent = labelText;
+
+  return { input, label };
+}
+
+genererFiltre();
+
+//----affichage des projets filtrees
 
 function filtrerProjets(categoryId) {
   const projetFiltre = projetsData.filter(projet => projet.categoryId == categoryId);
@@ -67,10 +118,10 @@ function setupButtonClickEvent(button, categoryId) {
   });
 }
 
-const btnTous = document.querySelector('.btn-tous');
-const btnObjets = document.querySelector('.btn-objets');
-const btnAppartement = document.querySelector('.btn-appartement');
-const btnHotel = document.querySelector('.btn-hotel');
+const btnTous = document.getElementById('tous');
+const btnObjets = document.getElementById('category1');
+const btnAppartement = document.getElementById('category2');
+const btnHotel = document.getElementById('category3');
 
 
 btnTous.addEventListener('click', () => {
@@ -81,6 +132,7 @@ btnTous.addEventListener('click', () => {
 setupButtonClickEvent(btnObjets, 1);
 setupButtonClickEvent(btnAppartement, 2);
 setupButtonClickEvent(btnHotel, 3);
+
 
 
 //--------Page d'accueil connexion------------
@@ -305,7 +357,7 @@ let image = document.getElementById('imgPreview');
 imageChange.style.display ='none'
 
 
-//Affichage de la vignette de photo
+//Affichage de la miniature de photo
 function previewImage() {
     if(photoUploader.style.display ='block',imageChange.style.display ='none'){
       photoUploader.style.display ='none',
@@ -336,7 +388,7 @@ function submitForm() {
   let category = document.getElementById('category').value;
   let imageUpload = document.getElementById('imageUpload');
  
-  // Activer le bouton de soumission uniquement si le formulaire est entièrement rempli
+  // envoyer un requete  uniquement si le formulaire est entièrement rempli
   if (title && category && imageUpload.files.length > 0) {
       
       // Créer un objet FormData

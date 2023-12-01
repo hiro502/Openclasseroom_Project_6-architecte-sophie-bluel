@@ -230,6 +230,8 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	top: -30px;
+	margin-top: 140px;
+
 }
 .mode-edition h2{
 	position: absolute;
@@ -257,11 +259,12 @@ footer nav ul {
 .filtres{
 	display: flex;
 	gap: 10px;
+	height: 37px;
 	margin: 51px auto;
-	width: 60%;
-}
+	justify-content: space-between;
+	}
 
-.filtres button{
+/* .filtres button{
 	color: #1D6154;
 	background-color: white;
 	height: 37px;
@@ -271,7 +274,7 @@ footer nav ul {
 	font-weight: 700;
 	border-radius: 60px;
 	border: 1px solid #1D6154;
-}
+} */
 
 .btn-filtrer{
 	display: none;
@@ -295,9 +298,10 @@ footer nav ul {
 	line-height: 37px;
 	border-radius: 60px;
 	border: 1px solid #1D6154;
+	padding: 0 20px;
 }
 
-.btn-tous, .btn-objets {
+/* .btn-tous, .btn-objets {
 	width: 18%; 
 }
 .btn-appartement{
@@ -305,7 +309,7 @@ footer nav ul {
 }
 .btn-hotel{
 	width: 32%;
-}
+} */
 
 /* Page Login */
 
